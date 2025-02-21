@@ -64,7 +64,8 @@
  cd mslearn-aks-workshop-ratings-api
  az acr build --resource-group $RESOURCE_GROUP --registry $ACR_NAME --image ratings-api:v1 .
 
- # 3. az acr build 실행 (ratings-web / 이 명령은 Dockerfile 을 사용하여 컨테이너 이미지를 빌드합니다. 그런 다음 결과 이미지를 컨테이너 레지스트리로 푸시합니다. 소스 코드는 GitHub 에 있습니다.)
+ # 3. az acr build 실행 (ratings-web)
+ 이 명령은 Dockerfile 을 사용하여 컨테이너 이미지를 빌드합니다. 그런 다음 결과 이미지를 컨테이너 레지스트리로 푸시합니다. 소스 코드는 GitHub 에 있습니다.)
  cd ~
  git clone https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-web.git
  cd mslearn-aks-workshop-ratings-web
