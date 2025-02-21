@@ -60,12 +60,14 @@
 
  # 2. az acr build 실행 (ratings-api)
  이 명령은 Dockerfile 을 사용하여 컨테이너 이미지를 빌드합니다. 그런 다음 결과 이미지를 컨테이너 레지스트리로 푸시합니다. 소스 코드는 GitHub 에 있습니다.
+ 
  git clone https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-api.git
  cd mslearn-aks-workshop-ratings-api
  az acr build --resource-group $RESOURCE_GROUP --registry $ACR_NAME --image ratings-api:v1 .
 
  # 3. az acr build 실행 (ratings-web)
  이 명령은 Dockerfile 을 사용하여 컨테이너 이미지를 빌드합니다. 그런 다음 결과 이미지를 컨테이너 레지스트리로 푸시합니다. 소스 코드는 GitHub 에 있습니다.)
+
  cd ~
  git clone https://github.com/MicrosoftDocs/mslearn-aks-workshop-ratings-web.git
  cd mslearn-aks-workshop-ratings-web
@@ -85,7 +87,8 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  * Helm Hub : https://hub.helm.sh/
 
  # 2. 이전에 생성한 ratingsapp 네임스페이스를 지정하여 MongoDB 인스턴스 설치
- # 매개 변수에 set 항목에 사용자 이름, 암호, 데이터베이스 이름을 설정할 수 있습니다.
+ 매개 변수에 set 항목에 사용자 이름, 암호, 데이터베이스 이름을 설정할 수 있습니다.
+ 
  helm install ratings bitnami/mongodb --namespace ratingsapp --set auth.username=testid,auth.password=testpw,auth.database=ratingsdb
 
  * 참고 : 삭제하려면 다음 명령어 사용
@@ -99,11 +102,11 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  kubectl get pod --namespace ratingsapp
 
  # Kubernetes Secret 생성
-  # MongoDB 세부 정보를 보관할 Kubernetes Secret을 생성합니다. (namespace : ratingsapp)
-  # Kubernetes 에서는 secret 을 사용해 암호와 같이 민감한 정보를 저장하고 관리할 수 있습니다. 이 정보를 secret 에 저장하면 Pod 정의 또는 컨테이너 이미지에 하드 코딩할 때보다 안전하고 유연합니다.
+ MongoDB 세부 정보를 보관할 Kubernetes Secret을 생성합니다. (namespace : ratingsapp)
+ Kubernetes 에서는 secret 을 사용해 암호와 같이 민감한 정보를 저장하고 관리할 수 있습니다. 이 정보를 secret 에 저장하면 Pod 정의 또는 컨테이너 이미지에 하드 코딩할 때보다 안전하고 유연합니다.
 
  # 1. Secret 생성
-  # 다음 명령을 사용하여 ratingsapp 네임스페이스에 mongosecret 라는 비밀을 만듭니다. Kubernetes 비밀은 여러 항목을 보유할 수 있으며 키로 인덱싱됩니다. 이 경우에서는 비밀이 MONGOCONNECTION 이라는 키 하나만 포함합니다. 값은 이전 단계에서 생성된 연결 문자열입니다.
+ 다음 명령을 사용하여 ratingsapp 네임스페이스에 mongosecret 라는 비밀을 만듭니다. Kubernetes 비밀은 여러 항목을 보유할 수 있으며 키로 인덱싱됩니다. 이 경우에서는 비밀이 MONGOCONNECTION 이라는 키 하나만 포함합니다. 값은 이전 단계에서 생성된 연결 문자열입니다.
  kubectl create secret generic mongosecret --namespace ratingsapp -- from-literal=MONGOCONNECTION="mongodb://testid:testpw@ratings-mongodb.ratingsapp:27017/ratingsdb"
 
  # 2. 다음 명령을 실행하여 secret 유효성 검사
@@ -113,7 +116,7 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  
 ------------------------------------------------------------------------------------------------------
 # ratings-api deploy 배포
- # 웹 프런트 엔드가 데이터베이스와 통신할 수 있도록 하는 RESTful API 인 ratings-api 를 배포합니다. ratings API 는 Express 프레임워크를 사용하여 작성된 Node.js 어플리케이션으로, MongoDB 데이터베이스에서 항목 및 해당 평가를 검색하고 저장합니다. RESTful API 에 대한 Kubernetes deployment 매니페스트 파일을 만들고, Kubernetes 서비스를 만들어 네트워크를 통해 RESTful API 를 노출합니다.
+웹 프런트 엔드가 데이터베이스와 통신할 수 있도록 하는 RESTful API 인 ratings-api 를 배포합니다. ratings API 는 Express 프레임워크를 사용하여 작성된 Node.js 어플리케이션으로, MongoDB 데이터베이스에서 항목 및 해당 평가를 검색하고 저장합니다. RESTful API 에 대한 Kubernetes deployment 매니페스트 파일을 만들고, Kubernetes 서비스를 만들어 네트워크를 통해 RESTful API 를 노출합니다.
  
  # 1. ratings-api deployment 배포
  kubectl apply -f ratings-api-deployment.yaml -n ratingsapp
@@ -133,7 +136,7 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  kubectl get endpoints ratings-api --namespace ratingsapp
 ------------------------------------------------------------------------------------------------------
 # ratings-web 배포 
- # 웹 프런트 엔드인 ratings-web 을 배포합니다. 평가 웹 프런트 엔드는 Node.js 어플리케이션입니다. 
+웹 프런트 엔드인 ratings-web 을 배포합니다. 평가 웹 프런트 엔드는 Node.js 어플리케이션입니다. 
 
  # 1. ratings-web deployment 배포
  kubectl apply -f ratings-web-deployment.yaml -n ratingsapp
@@ -153,8 +156,8 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  http://<External IP>
 ------------------------------------------------------------------------------------------------------
 # Kubernetes ingresss controller 배포
- # Kubernetes ingresss controller는 L7 부하 분산 장치 기능을 제공하는 소프트웨어입니다. 해당 기능에는 역방향 프록시, 구성 가능한 트래픽 라우팅 및 Kubernetes 서비스에 대한 TLS 구성이 포함됩니다. ingresss controller를 설치하고 부하 분산 장치를 대체하도록 구성합니다. 
- # 여기서는 NGINX 를 사용하여 기본 Kubernetes ingresss controller를 배포합니다. 그런 다음, 해당 수신을 사용하도록 프런트엔드 서비스를 구성합니다. Helm 차트를 사용하여 ingresss controller 설치를 진행합니다
+Kubernetes ingresss controller는 L7 부하 분산 장치 기능을 제공하는 소프트웨어입니다. 해당 기능에는 역방향 프록시, 구성 가능한 트래픽 라우팅 및 Kubernetes 서비스에 대한 TLS 구성이 포함됩니다. ingresss controller를 설치하고 부하 분산 장치를 대체하도록 구성합니다. 
+여기서는 NGINX 를 사용하여 기본 Kubernetes ingresss controller를 배포합니다. 그런 다음, 해당 수신을 사용하도록 프런트엔드 서비스를 구성합니다. Helm 차트를 사용하여 ingresss controller 설치를 진행합니다
 
  # 1. ingress에 대한 네임스페이스 생성
  kubectl create namespace ingress
@@ -179,10 +182,10 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  kubectl apply --namespace ratingsapp -f ratings-web-service.yaml
 ------------------------------------------------------------------------------------------------------
 # SSL/TLS 적용
- # HTTPS 연결을 적용하도록 cert-manager 및 Let's Encrypt용 ClusterIssuer 리소스를 배포합니다.
+HTTPS 연결을 적용하도록 cert-manager 및 Let's Encrypt용 ClusterIssuer 리소스를 배포합니다.
 
  # 1. cert-manager 배포
- # cert-manager 는 클라우드 네이티브 환경에서 인증서 관리를 자동화하도록 해주는 Kubernetes 인증서 관리 컨트롤러입니다. 인증서 관리자는 Let's Encrypt, HashiCorp Vault, Venafi, 간단한 서명 키 쌍 또는 자체 서명된 인증서를 비롯한 다양한 소스를 지원합니다. cert-manager 를 사용하여 웹 사이트의 인증서가 유효하고 최신 상태인지 확인하고, 인증서가 만료되기 전에 구성된 시간에 인증서를 갱신합니다.
+ cert-manager 는 클라우드 네이티브 환경에서 인증서 관리를 자동화하도록 해주는 Kubernetes 인증서 관리 컨트롤러입니다. 인증서 관리자는 Let's Encrypt, HashiCorp Vault, Venafi, 간단한 서명 키 쌍 또는 자체 서명된 인증서를 비롯한 다양한 소스를 지원합니다. cert-manager 를 사용하여 웹 사이트의 인증서가 유효하고 최신 상태인지 확인하고, 인증서가 만료되기 전에 구성된 시간에 인증서를 갱신합니다.
 
  # cert-manager 네임스페이스 생성
  kubectl create namespace cert-manager
@@ -207,9 +210,11 @@ Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 �
  kubectl apply -f ratings-web-ingress.yaml --namespace ratingsapp 
  
  # 4. 인증서가 발급되었는지 확인합니다. 10분 이상 시간이 소요됩니다.
-  # Message 값이 Certificate is up to date and has not expired 로 변경되어야 합니다.
+ Message 값이 Certificate is up to date and has not expired 로 변경되어야 합니다.
+ 
  kubectl describe cert ratings-web-cert --namespace ratingsapp
 
  # 5. SSL이 정상적으로 적용되었는지 테스트합니다.
-  # 브라우저에서 https:// 와 함께, 앞의 결과에 보이는 DNS Name 을 입력합니다.
+ 브라우저에서 https:// 와 함께, 앞의 결과에 보이는 DNS Name 을 입력합니다.
+ 
  https://www.bbiyak.shop/#/
