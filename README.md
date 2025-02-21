@@ -75,7 +75,7 @@
  az acr repository list --name $ACR_NAME --output table
 ------------------------------------------------------------------------------------------------------
 # * Helm 차트를 이용해 MongoDB 배포
- # Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 사용해 어플리케이션과 서비스를 쉽게 배포할 수 있는 방법을 제공합니다.이 연습에서는 Helm 을 사용하여 AKS(Azure Kubernetes Service) 클러스터로 MongoDB 를 배포합니다. 
+Helm 은 Kubernetes 용 어플리케이션 패키지 관리자이며 차트를 사용해 어플리케이션과 서비스를 쉽게 배포할 수 있는 방법을 제공합니다.이 연습에서는 Helm 을 사용하여 AKS(Azure Kubernetes Service) 클러스터로 MongoDB 를 배포합니다. 
 
  # 1. bitnami 리포지토리를 사용하도록 Helm 클라이언트 구성
  helm repo add bitnami https://charts.bitnami.com/bitnami
