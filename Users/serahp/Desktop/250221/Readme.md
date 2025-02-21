@@ -6,7 +6,7 @@
  VNET_NAME=aks-vnet
  RESOURCE_GROUP=serahp-rg
 
- 확인
+ # 3. 확인
  echo $REGION_NAME
 
 # Azure CLI를 사용하여 네트워킹 구성
