@@ -1,13 +1,13 @@
 # 사전 작업
-# 1. Azure Cloud Shell 로그인
-# 2. 환경변수 지정
-REGION_NAME=koreacentral
-SUBNET_NAME=aks-snet
-VNET_NAME=aks-vnet
-RESOURCE_GROUP=serahp-rg
+ # 1. Azure Cloud Shell 로그인
+ # 2. 환경변수 지정
+ REGION_NAME=koreacentral
+ SUBNET_NAME=aks-snet
+ VNET_NAME=aks-vnet
+ RESOURCE_GROUP=serahp-rg
 
-확인
-echo $REGION_NAME
+ 확인
+ echo $REGION_NAME
 
 # Azure CLI를 사용하여 네트워킹 구성
  # 1. 가상 네트워크 및 서브넷 구성
