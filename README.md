@@ -45,7 +45,9 @@
 
 # * Azure Container Registry 작업을 사용하여 컨테이너 이미지 빌드
  Fruit Smoothies 평가 앱은 프런트 엔드 웹 사이트와 RESTful API 웹 서비스에 각각 1 개의 컨테이너 이미지를 사용합니다.
+ 
  개발 팀은 로컬 Docker 도구를 사용하여 웹 사이트 및 API 웹 서비스에 대한 컨테이너 이미지를 빌드합니다. 세 번째 컨테이너는 데이터베이스 게시자가 제공하는 문서 데이터베이스를 배포하는 데 사용되며 ACR 에는 데이터베이스 컨테이너가 저장되지 않습니다. Azure Container Registry 를 사용하여 표준 Dockerfile 로 이러한 컨테이너를 빌드하고 빌드 지침을 제공할 수 있습니다. Azure Container Registry 를 사용하면 다단계 빌드를 포함하여 모든 Dockerfile 을 현재 환경에서 다시 사용할 수 있습니다.
+ 
  먼저 Node.js 웹 프레임워크인 Express 를 사용하여 빌드된 ratings-api 이미지를 빌드하고 레지스트리에 푸시합니다. 소스 코드 는 GitHub 에 있으며, Node.js Alpine 컨테이너 이미지를 기반으로 이미지를 빌드하는 Dockerfile 이 이미 포함되어 있습니다. 여기에서 리포지토리를 복제한 다음, 포함된 Dockerfile 을 사용하여 Docker 이미지를 빌드하고 레지스트리에 푸시합니다.
 
  # 1. acr 생성 및 연동
