@@ -174,10 +174,12 @@ Kubernetes ingresss controller는 L7 부하 분산 장치 기능을 제공하는
  확인 후 Ingress Controller의 External IP를 기록해둡니다.
 
  # 4. ClusterIP 를 사용하도록 ratings-web 서비스를 재구성
- # 텍스트 편집기로 ratings-web-service.yaml 파일을 열고, type 을 ClusterIP 로 변경합니다.
+ 텍스트 편집기로 ratings-web-service.yaml 파일을 열고, type 을 ClusterIP 로 변경합니다.
+ 
  vi ratings-web-service.yaml 
 
- #  배포된 서비스에서는 type 의 값을 업데이트할 수 없어, 먼저 서비스를 삭제하고 다시 배포합니다.
+ # 배포된 서비스에서는 type 의 값을 업데이트할 수 없어, 먼저 서비스를 삭제하고 다시 배포합니다.
+ 
  kubectl delete --namespace ratingsapp -f ratings-web-service.yaml
  kubectl apply --namespace ratingsapp -f ratings-web-service.yaml
 ------------------------------------------------------------------------------------------------------
